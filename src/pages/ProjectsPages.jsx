@@ -1,7 +1,7 @@
 import React from "react";
 
 function ProjectsPages() {
-  return <div>ProjectsPages</div>;
+  return <div>My Projects</div>;
 }
 
 export default ProjectsPages;
