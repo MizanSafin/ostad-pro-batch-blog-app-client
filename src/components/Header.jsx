@@ -10,8 +10,11 @@ function Header() {
     <>
       <Navbar className="shadow-md   dark:text-gray-300 ">
         <div className="left flex items-center">
-          <Link to={"/"} className="whitespace-nowrap self-center py-2">
-            <span className="px-2 py-1 bg-gradient-to-r from-lime-900 via-lime-700 to-amber-400 rounded-md text-gray-200">
+          <Link
+            to={"/"}
+            className="whitespace-nowrap self-center py-2 text-lime-900"
+          >
+            <span className="px-2 py-1 bg-gradient-to-r to-lime-500 via-lime-300 from-lime-100 rounded-md ">
               Mizan,s
             </span>
             Blog

@@ -12,6 +12,7 @@ import Header from "./components/Header";
 // import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import BlogsPage from "./pages/BlogsPage";
 import ContactPage from "./pages/ContactPage";
+import Footer from "./components/Footer";
 // const queryClient = new QueryClient();
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
