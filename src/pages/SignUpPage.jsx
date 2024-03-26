@@ -4,7 +4,7 @@ import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function SignInPage() {
+function SignUpPage() {
   const [formData, setFormData] = useState({});
   const [errMessage, setErrMessage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -14,19 +14,19 @@ function SignInPage() {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
   const handleSubmit = async () => {
-    let { email, password } = formData;
-    if (!email || !password) {
+    let { userName, email, password } = formData;
+    if (!userName || !email || !password) {
       return setErrMessage(`All fields are required .`);
     }
     setLoading(true);
     setErrMessage(null);
     axios
-      .post(`http://localhost:3232/api/v1/auth/login`, formData, {
+      .post(`http://localhost:3232/api/v1/user/createUser`, formData, {
         withCredentials: true,
       })
       .then((res) => {
         if (res.data.success === true) {
-          navigate("/");
+          navigate("/sign-in");
           setLoading(false);
         }
       })
@@ -54,6 +54,23 @@ function SignInPage() {
 
       <div className="p-5 flex-1  mt-10">
         <div className="flex max-w-md flex-col gap-4 shadow-sm bg-lime-200 px-5 py-7 rounded-md">
+          <div>
+            <div className="mb-2 block">
+              <Label
+                className="text-lime-700 text-[16px]"
+                htmlFor="userName"
+                value="User Name :"
+              />
+            </div>
+            <TextInput
+              onChange={handleChange}
+              className=""
+              id="userName"
+              type="text"
+              // sizing="md"
+              placeholder="User name."
+            />
+          </div>
           <div>
             <div className="mb-2 block">
               <Label
@@ -99,18 +116,18 @@ function SignInPage() {
                   <span> Loading ...</span>
                 </>
               ) : (
-                "Sign in"
+                "Sign up"
               )}
             </Button>
           </div>
 
           <div className="mt-0 flex gap-7 items-center">
-            <span className="text-lime-700">Don,t have an account ?</span>
+            <span className="text-lime-700">Have an account ?</span>
             <Link
-              to={"/sign-up"}
+              to={"/sign-in"}
               className="bg-lime-100 hover:bg-lime-200 transition px-4 py-1 rounded-md text-lime-700"
             >
-              Sign up
+              Sign in
             </Link>
           </div>
 
@@ -125,4 +142,4 @@ function SignInPage() {
   );
 }
 
-export default SignInPage;
+export default SignUpPage;

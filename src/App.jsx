@@ -13,6 +13,7 @@ import Header from "./components/Header";
 import BlogsPage from "./pages/BlogsPage";
 import ContactPage from "./pages/ContactPage";
 import Footer from "./components/Footer";
+import SignUpPage from "./pages/SignUpPage";
 // const queryClient = new QueryClient();
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/sign-in" element={<SignInPage />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/sign-out" element={<SignOutPage />} />
         <Route path="/projects" element={<ProjectsPages />} />
         <Route path="/blogs" element={<BlogsPage />} />
