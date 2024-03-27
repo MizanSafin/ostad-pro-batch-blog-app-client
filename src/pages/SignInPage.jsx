@@ -1,42 +1,50 @@
 import axios from "axios";
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../redux/state/user/userSlice";
 
 function SignInPage() {
   const [formData, setFormData] = useState({});
-  const [errMessage, setErrMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+
+  const { loading, error: errMessage } = user;
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
   const handleSubmit = async () => {
     let { email, password } = formData;
     if (!email || !password) {
-      return setErrMessage(`All fields are required .`);
+      return dispatch(signInFailure(`All fields are required .`));
     }
-    setLoading(true);
-    setErrMessage(null);
+    dispatch(signInStart());
     axios
       .post(`http://localhost:3232/api/v1/auth/login`, formData, {
         withCredentials: true,
       })
       .then((res) => {
+        if (res.data.success === false) {
+          dispatch(signInFailure(res.data.message));
+          // setLoading(false);
+        }
         if (res.data.success === true) {
           navigate("/");
-          setLoading(false);
+          dispatch(signInSuccess(res.data.user));
         }
       })
       .catch((err) => {
-        setErrMessage(err.response.data.message);
-        console.log(err);
-        setLoading(false);
+        dispatch(signInFailure(err.response.data.message));
       });
   };
-
+  // console.log(loading);
   return (
     <div className=" min-h-screen flex flex-col md:flex-row  justify-between gap-7 max-w-[1200px] mx-auto">
       <div className="mt-20 flex-1  flex flex-col gap-5 justify-start ps-5 md:ms-10 md:mt-36 ">
