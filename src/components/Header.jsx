@@ -41,7 +41,6 @@ function Header() {
         <div className="flex gap-2 md:order-2 items-center">
           {/* <DarkMode /> */}
           <button
-            outline
             onClick={() => dispatch(toggleTheme())}
             className="bg-transparent text-[18px] outline-slate-300 hover:bg-slate-100 rounded-full p-2 outline-3 cursor-pointer"
           >

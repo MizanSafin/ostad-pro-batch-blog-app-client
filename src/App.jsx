@@ -14,6 +14,7 @@ import BlogsPage from "./pages/BlogsPage";
 import ContactPage from "./pages/ContactPage";
 import Footer from "./components/Footer";
 import SignUpPage from "./pages/SignUpPage";
+import PrivateRoute from "./components/PrivateRoute";
 // const queryClient = new QueryClient();
 
 function App() {
@@ -27,10 +28,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/sign-out" element={<SignOutPage />} />
+
         <Route path="/projects" element={<ProjectsPages />} />
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/contact" element={<ContactPage />} />
