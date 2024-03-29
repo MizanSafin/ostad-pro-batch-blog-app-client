@@ -1,14 +1,18 @@
 import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import DarkMode from "./DarkMode";
+// import DarkMode from "./DarkMode";
 import { AiOutlineSearch } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { FaMoon, FaSun } from "react-icons/fa";
+import { toggleTheme } from "../redux/state/theme/themeSlice";
 
 function Header() {
+  let dispatch = useDispatch();
+  let { theme } = useSelector((state) => state.theme);
   let path = useLocation().pathname;
   let { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser);
+  console.log(theme);
   return (
     <>
       <Navbar className="shadow-md   dark:text-gray-300 ">
@@ -34,8 +38,15 @@ function Header() {
         <Button className="lg:hidden " color={"gray"} pill>
           <AiOutlineSearch className="hover:text-slate-700 dark:text-slate-500" />
         </Button>
-        <div className="flex gap-2 md:order-2">
-          <DarkMode />
+        <div className="flex gap-2 md:order-2 items-center">
+          {/* <DarkMode /> */}
+          <button
+            outline
+            onClick={() => dispatch(toggleTheme())}
+            className="bg-transparent text-[18px] outline-slate-300 hover:bg-slate-100 rounded-full p-2 outline-3 cursor-pointer"
+          >
+            {theme === "light" ? <FaMoon /> : <FaSun />}
+          </button>
           {currentUser ? (
             <>
               <Dropdown

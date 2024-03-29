@@ -62,7 +62,7 @@ function SignInPage() {
       </div>
 
       <div className="p-5 flex-1  mt-10">
-        <div className="flex max-w-md flex-col gap-4 shadow-sm bg-lime-200 px-5 py-7 rounded-md">
+        <div className="flex max-w-md flex-col gap-4 shadow-md dark:bg-lime-900 bg-green-50 px-5 py-7 rounded-md">
           <div>
             <div className="mb-2 block">
               <Label
@@ -97,7 +97,7 @@ function SignInPage() {
           </div>
           <div>
             <Button
-              className="bg-red-300 hover:bg-red-700 text-lime-700"
+              className="bg-red-300 hover:bg-red-700 text-lime-700 mb-5"
               gradientDuoTone="tealToLime"
               onClick={handleSubmit}
               disabled={loading}
@@ -115,7 +115,9 @@ function SignInPage() {
           </div>
 
           <div className="mt-0 flex gap-7 items-center">
-            <span className="text-lime-700">Don,t have an account ?</span>
+            <span className="text-lime-900 dark:text-lime-50">
+              Don,t have an account ?
+            </span>
             <Link
               to={"/sign-up"}
               className="bg-lime-100 hover:bg-lime-200 transition px-4 py-1 rounded-md text-lime-700"

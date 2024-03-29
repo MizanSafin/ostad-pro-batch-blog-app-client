@@ -54,7 +54,7 @@ function SignUpPage() {
       </div>
 
       <div className="p-5 flex-1  mt-10">
-        <div className="flex max-w-md flex-col gap-4 shadow-sm bg-lime-200 px-5 py-7 rounded-md">
+        <div className="flex max-w-md flex-col gap-4 shadow-md hover:shadow-lg bg-green-50 px-5 py-7 rounded-md">
           <div>
             <div className="mb-2 block">
               <Label
@@ -106,7 +106,7 @@ function SignUpPage() {
           </div>
           <div>
             <Button
-              className="bg-red-300 hover:bg-red-700 text-lime-700"
+              className="bg-red-300 hover:bg-red-700 text-lime-700 mb-5"
               gradientDuoTone="tealToLime"
               onClick={handleSubmit}
               disabled={loading}
@@ -123,8 +123,8 @@ function SignUpPage() {
             <OAuth />
           </div>
 
-          <div className="mt-0 flex gap-7 items-center">
-            <span className="text-lime-700">Have an account ?</span>
+          <div className="mt-0 flex gap-7 items-center ps-1">
+            <span className="text-lime-500">Have an account ?</span>
             <Link
               to={"/sign-in"}
               className="bg-lime-100 hover:bg-lime-200 transition px-4 py-1 rounded-md text-lime-700"
