@@ -8,6 +8,7 @@ import {
   signInStart,
   signInSuccess,
 } from "../redux/state/user/userSlice";
+import OAuth from "../components/OAuth";
 
 function SignInPage() {
   const [formData, setFormData] = useState({});
@@ -110,6 +111,7 @@ function SignInPage() {
                 "Sign in"
               )}
             </Button>
+            <OAuth />
           </div>
 
           <div className="mt-0 flex gap-7 items-center">
