@@ -1,11 +1,14 @@
-import { Button, Navbar, TextInput } from "flowbite-react";
+import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import DarkMode from "./DarkMode";
 import { AiOutlineSearch } from "react-icons/ai";
+import { useSelector } from "react-redux";
+
 function Header() {
   let path = useLocation().pathname;
-
+  let { currentUser } = useSelector((state) => state.user);
+  console.log(currentUser);
   return (
     <>
       <Navbar className="shadow-md   dark:text-gray-300 ">
@@ -33,15 +36,39 @@ function Header() {
         </Button>
         <div className="flex gap-2 md:order-2">
           <DarkMode />
-          <Link to={"/sign-in"} className="">
-            <Button
-              className="bg-red-300 hover:bg-red-700 "
-              gradientDuoTone="tealToLime"
-              outline
-            >
-              Sign in
-            </Button>
-          </Link>
+          {currentUser ? (
+            <>
+              <Dropdown
+                arrowIcon={false}
+                inline
+                label={
+                  <Avatar alt="user" img={currentUser.profilePicture} rounded />
+                }
+              >
+                <Dropdown.Header>
+                  <span className="block text-sm">{currentUser.userName}</span>
+                  <span className=" mt-1 block text-sm truncate">
+                    {currentUser.email}
+                  </span>
+                </Dropdown.Header>
+                <Link to={"/dashboard?tab=profile"}>
+                  <Dropdown.Item>profile</Dropdown.Item>
+                </Link>
+                <Dropdown.Divider />
+                <Dropdown.Item>Sign out</Dropdown.Item>
+              </Dropdown>
+            </>
+          ) : (
+            <Link to={"/sign-in"} className="">
+              <Button
+                className="bg-red-300 hover:bg-red-700 "
+                gradientDuoTone="tealToLime"
+                outline
+              >
+                Sign in
+              </Button>
+            </Link>
+          )}
           <Navbar.Toggle />
         </div>
         <Navbar.Collapse>
