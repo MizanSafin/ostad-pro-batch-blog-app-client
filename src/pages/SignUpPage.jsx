@@ -54,7 +54,7 @@ function SignUpPage() {
       </div>
 
       <div className="p-5 flex-1  mt-10">
-        <div className="flex max-w-md flex-col gap-4 shadow-md hover:shadow-lg bg-green-50 px-5 py-7 rounded-md">
+        <div className="flex max-w-md flex-col gap-4 shadow-md hover:shadow-lg dark:bg-lime-800 bg-green-50 px-5 py-7 rounded-md">
           <div>
             <div className="mb-2 block">
               <Label

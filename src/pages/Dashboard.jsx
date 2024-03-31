@@ -21,7 +21,9 @@ function Dashboard() {
       <div className="">
         <DashBoardSidebar />
       </div>
-      <div className="">{tab === "profile" ? <DashBoardProfile /> : <></>}</div>
+      <div className="w-full">
+        {tab === "profile" ? <DashBoardProfile /> : <></>}
+      </div>
     </div>
   );
 }
