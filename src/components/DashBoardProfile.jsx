@@ -1,6 +1,6 @@
 import { Alert, Button, TextInput } from "flowbite-react";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   getDownloadURL,
@@ -11,6 +11,12 @@ import {
 import { app } from "../../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import axios from "axios";
+import {
+  updateStart,
+  updateSuccess,
+  updateFailure,
+} from "../redux/state/user/userSlice";
 
 function DashBoardProfile() {
   const { currentUser } = useSelector((state) => state.user);
@@ -19,7 +25,18 @@ function DashBoardProfile() {
   const filePickerRef = useRef();
   const [fileUploadProgress, setFileUploadProgress] = useState(null);
   const [fileUploadError, setFileUploadError] = useState(null);
-  const [fileUploading, setFileUploading] = useState(null);
+  const [fileUploading, setFileUploading] = useState(false);
+  const [formData, setFormData] = useState({});
+  const dispatch = useDispatch();
+  const [updateErrMsg, setUpdateErrMsg] = useState(null);
+  const [updateSuccessMsg, setUpdateSuccessMsg] = useState(null);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value.trim().toLowerCase(),
+    });
+  };
 
   const handleImageChange = (e) => {
     let file = e.target.files[0];
@@ -37,6 +54,7 @@ function DashBoardProfile() {
   async function uploadImage() {
     setFileUploading(true);
     setFileUploadError(null);
+
     const storage = getStorage(app);
     const fileName = new Date().getTime() + img.name;
     const storageRef = ref(storage, fileName);
@@ -61,25 +79,61 @@ function DashBoardProfile() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImgUrl(downloadURL);
-          //   setFormData({ ...formData, profilePicture: downloadURL });
+          setFormData({ ...formData, profilePicture: downloadURL });
           setFileUploading(false);
         });
       }
     );
   }
-  console.log(fileUploadError, fileUploadProgress, fileUploading);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    if (Object.keys(formData).length === 0) {
+      return;
+    }
+    if (formData.userName && formData.userName.includes(" ")) {
+      setUpdateErrMsg("UserName should not have a space");
+      setUpdateSuccessMsg(null);
+      return;
+    }
+    if (fileUploading) {
+      setUpdateErrMsg(`Please wait for image uploading...`);
+      setUpdateSuccessMsg(null);
+      return;
+    }
+    setUpdateSuccessMsg(null);
+    dispatch(updateStart());
+    axios
+      .post(
+        `http://localhost:3232/api/v1/user/updateUser/${currentUser._id}`,
+        formData,
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res.data.data);
+        if (res.data.success === false) {
+          dispatch(updateFailure(res.data.message));
+        }
+        dispatch(updateSuccess(res.data.data));
+        setUpdateErrMsg(null);
+        setUpdateSuccessMsg(`Profile update successfully!`);
+      })
+      .catch((err) => dispatch(updateFailure(err.message)));
+  };
   return (
     <div className="p-3 flex gap-6 my-4 flex-col items-center ">
       <h1 className="text-center text-2xl">Profile</h1>
-      <form className="flex gap-4 flex-col justify-center  w-full max-w-[500px]">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          ref={filePickerRef}
-          hidden
-        />
-
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+        ref={filePickerRef}
+        hidden
+      />
+      <form
+        onClick={handleSubmit}
+        className="flex gap-4 flex-col justify-center  w-full max-w-[500px]"
+      >
         <div
           className="relative cursor-pointer self-center w-32 h-32 overflow-hidden shadow-md rounded-full"
           onClick={() => filePickerRef.current.click()}
@@ -119,13 +173,38 @@ function DashBoardProfile() {
           <></>
         )}
         <TextInput
+          onChange={handleChange}
           type="text"
           id="userName"
           defaultValue={currentUser.userName}
         />
-        <TextInput type="email" id="email" defaultValue={currentUser.email} />
-        <TextInput type="password" id="password" defaultValue="********" />
-        <Button gradientDuoTone="tealToLime" outline>
+
+        <TextInput
+          onChange={handleChange}
+          type="email"
+          id="email"
+          defaultValue={currentUser.email}
+        />
+        <TextInput
+          onChange={handleChange}
+          type="password"
+          id="password"
+          defaultValue="********"
+        />
+
+        {updateErrMsg && (
+          <>
+            <hr />
+            <Alert color="failure">{updateErrMsg}</Alert>
+          </>
+        )}
+        {updateSuccessMsg && (
+          <>
+            <hr />
+            <Alert color="success">{updateSuccessMsg}</Alert>
+          </>
+        )}
+        <Button type="submit" gradientDuoTone="tealToLime" outline>
           Update
         </Button>
         <div className="flex justify-between text-red-500">

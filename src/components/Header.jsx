@@ -49,6 +49,7 @@ function Header() {
           {currentUser ? (
             <>
               <Dropdown
+                className="object-cover"
                 arrowIcon={false}
                 inline
                 label={
