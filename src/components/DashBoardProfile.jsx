@@ -1,7 +1,7 @@
-import { Alert, Button, TextInput } from "flowbite-react";
+import { Alert, Button, Modal, TextInput } from "flowbite-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 import {
   getDownloadURL,
   getStorage,
@@ -16,6 +16,9 @@ import {
   updateStart,
   updateSuccess,
   updateFailure,
+  deleteUserStart,
+  deleteUserFailure,
+  deleteUserSuccess,
 } from "../redux/state/user/userSlice";
 
 function DashBoardProfile() {
@@ -30,6 +33,7 @@ function DashBoardProfile() {
   const dispatch = useDispatch();
   const [updateErrMsg, setUpdateErrMsg] = useState(null);
   const [updateSuccessMsg, setUpdateSuccessMsg] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -98,13 +102,13 @@ function DashBoardProfile() {
       return;
     }
     let name = formData.userName;
-    if (name.length < 7 || name.length > 20) {
+    if (name === undefined || name.length < 7 || name.length > 20) {
       setUpdateErrMsg(`Please enter username length between 7 -20`);
+      return;
     }
     if (fileUploading) {
       setUpdateErrMsg(`Please wait for image uploading...`);
       setUpdateSuccessMsg(null);
-
       return;
     }
     setUpdateSuccessMsg(null);
@@ -128,6 +132,23 @@ function DashBoardProfile() {
         console.log(err);
         dispatch(updateFailure(err.message));
       });
+  };
+
+  const handleDeleteUser = () => {
+    setShowModal(false);
+    dispatch(deleteUserStart());
+    axios
+      .delete(
+        `http://localhost:3232/api/v1/user/deleteUser/${currentUser._id}`,
+        { withCredentials: true }
+      )
+      .then((res) => {
+        if (res.data.success === false) {
+          dispatch(deleteUserFailure(res.data.message));
+        }
+        dispatch(deleteUserSuccess());
+      })
+      .catch((err) => dispatch(deleteUserFailure(err.message)));
   };
 
   return (
@@ -217,11 +238,40 @@ function DashBoardProfile() {
         <Button type="submit" gradientDuoTone="tealToLime" outline>
           Update
         </Button>
-        <div className="flex justify-between text-red-500">
-          <Link>delete account</Link>
-          <Link>sign out</Link>
+        <div className="flex justify-between text-red-300 ">
+          <button
+            onClick={() => setShowModal(true)}
+            className="hover:text-red-400"
+          >
+            delete account
+          </button>
+          <button className="hover:text-red-400">sign out</button>
         </div>
       </form>
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        popup
+        size="md"
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+            <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
+              Are you sure you want to delete your account?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button color="failure" onClick={handleDeleteUser}>
+                Yes, I'm sure
+              </Button>
+              <Button color="gray" onClick={() => setShowModal(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }
