@@ -33,7 +33,7 @@ function SignUpPage() {
       })
       .catch((err) => {
         setErrMessage(err.response.data.message);
-        console.log(err);
+
         setLoading(false);
       });
   };

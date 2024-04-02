@@ -81,6 +81,7 @@ function DashBoardProfile() {
           setImgUrl(downloadURL);
           setFormData({ ...formData, profilePicture: downloadURL });
           setFileUploading(false);
+          setUpdateErrMsg(null);
         });
       }
     );
@@ -96,9 +97,14 @@ function DashBoardProfile() {
       setUpdateSuccessMsg(null);
       return;
     }
+    let name = formData.userName;
+    if (name.length < 7 || name.length > 20) {
+      setUpdateErrMsg(`Please enter username length between 7 -20`);
+    }
     if (fileUploading) {
       setUpdateErrMsg(`Please wait for image uploading...`);
       setUpdateSuccessMsg(null);
+
       return;
     }
     setUpdateSuccessMsg(null);
@@ -110,7 +116,7 @@ function DashBoardProfile() {
         { withCredentials: true }
       )
       .then((res) => {
-        console.log(res.data.data);
+        console.log(res);
         if (res.data.success === false) {
           dispatch(updateFailure(res.data.message));
         }
@@ -118,8 +124,12 @@ function DashBoardProfile() {
         setUpdateErrMsg(null);
         setUpdateSuccessMsg(`Profile update successfully!`);
       })
-      .catch((err) => dispatch(updateFailure(err.message)));
+      .catch((err) => {
+        console.log(err);
+        dispatch(updateFailure(err.message));
+      });
   };
+
   return (
     <div className="p-3 flex gap-6 my-4 flex-col items-center ">
       <h1 className="text-center text-2xl">Profile</h1>
