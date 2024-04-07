@@ -19,6 +19,7 @@ import {
   deleteUserStart,
   deleteUserFailure,
   deleteUserSuccess,
+  signOutSuccess,
 } from "../redux/state/user/userSlice";
 
 function DashBoardProfile() {
@@ -151,6 +152,21 @@ function DashBoardProfile() {
       .catch((err) => dispatch(deleteUserFailure(err.message)));
   };
 
+  //signOut
+  const handleSignOut = () => {
+    axios
+      .get(`http://localhost:3232/api/v1/user/signOut`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.success === false) {
+          console.log(res.data.message);
+        }
+        dispatch(signOutSuccess());
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className="p-3 flex gap-6 my-4 flex-col items-center ">
       <h1 className="text-center text-2xl">Profile</h1>
@@ -245,7 +261,9 @@ function DashBoardProfile() {
           >
             delete account
           </button>
-          <button className="hover:text-red-400">sign out</button>
+          <button onClick={handleSignOut} className="hover:text-red-400">
+            sign out
+          </button>
         </div>
       </form>
       <Modal
