@@ -29,11 +29,11 @@ function SignUpPage() {
         if (res.data.success === true) {
           navigate("/sign-in");
           setLoading(false);
+          alert("signUp successfully");
         }
       })
       .catch((err) => {
         setErrMessage(err.response.data.message);
-
         setLoading(false);
       });
   };

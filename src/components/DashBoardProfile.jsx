@@ -21,6 +21,7 @@ import {
   deleteUserSuccess,
   signOutSuccess,
 } from "../redux/state/user/userSlice";
+import { Link } from "react-router-dom";
 
 function DashBoardProfile() {
   const { currentUser } = useSelector((state) => state.user);
@@ -254,6 +255,13 @@ function DashBoardProfile() {
         <Button type="submit" gradientDuoTone="tealToLime" outline>
           Update
         </Button>
+
+        <Link to={"/create-post"}>
+          <button className="bg-lime-100 px-5 py-1 rounded-md text-lime-700 hover:text-lime-100 hover:bg-lime-700 transition-all font-semibold">
+            Create a post
+          </button>
+        </Link>
+
         <div className="flex justify-between text-red-300 ">
           <button
             onClick={() => setShowModal(true)}

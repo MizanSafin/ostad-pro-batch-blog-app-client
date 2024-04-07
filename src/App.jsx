@@ -15,6 +15,8 @@ import ContactPage from "./pages/ContactPage";
 import Footer from "./components/Footer";
 import SignUpPage from "./pages/SignUpPage";
 import PrivateRoute from "./components/PrivateRoute";
+import CreatePost from "./components/CreatePost";
+import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
 // const queryClient = new QueryClient();
 
 function App() {
@@ -31,6 +33,10 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
+        <Route element={<OnlyAdminPrivateRoute />}>
+          <Route path="/create-post" element={<CreatePost />} />
+        </Route>
+
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/sign-out" element={<SignOutPage />} />
