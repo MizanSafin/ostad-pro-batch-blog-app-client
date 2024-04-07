@@ -29,7 +29,12 @@ function CreatePost() {
               Upload image
             </button>
           </div>
-          <ReactQuill theme="snow" className="h-[200px] mb-10 " required />
+          <ReactQuill
+            theme="snow"
+            className="h-[200px] mb-10 "
+            required
+            placeholder="write something .."
+          />
           <div className="ms-1 ">
             <button
               type="submit"
