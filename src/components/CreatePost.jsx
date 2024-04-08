@@ -11,6 +11,8 @@ import {
 import { app } from "../../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 //functional component start
 function CreatePost() {
@@ -18,6 +20,12 @@ function CreatePost() {
   const [formData, setFormData] = useState({});
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
+  const [publishErr, setPublishErr] = useState(null);
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
 
   const handleUploadImg = async () => {
     try {
@@ -54,19 +62,37 @@ function CreatePost() {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post(`http://localhost:3232/api/v1/post/create-post`, formData, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.success === true) {
+          navigate(`/post/${res.data.data.slug}`);
+        } else if (res.success === false) {
+          setPublishErr(res.data.message);
+          return;
+        }
+      })
+      .catch((error) => setPublishErr(error.message));
+  };
   return (
     <div className="min-h-screen flex-col flex gap-4 p-5 items-center">
       <div className="wrapper w-full max-w-[600px] my-10 flex justify-center flex-col gap-4  p-0">
         <h2 className="text-2xl font-semibold">Create a Post</h2>
-        <form className="flex flex-col  gap-7  py-5">
+        <form className="flex flex-col  gap-7  py-5" onSubmit={handleSubmit}>
           <div className="flex gap-4 justify-between">
             <TextInput
               type="text"
               placeholder="title"
               className="w-full flex-1"
               id="title"
+              onChange={handleChange}
+              required
             />
-            <Select id="category">
+            <Select id="category" onChange={handleChange}>
               <option value="uncategorized">select a category</option>
               <option value="javascript">Javascript</option>
               <option value="reactjs">React.js</option>
@@ -117,6 +143,7 @@ function CreatePost() {
             required
             id="content"
             placeholder="write something .."
+            onChange={(value) => setFormData({ ...formData, content: value })}
           />
           <div className="ms-1 ">
             <button
@@ -126,6 +153,11 @@ function CreatePost() {
               publish
             </button>
           </div>
+          {publishErr && (
+            <>
+              <Alert color="failure">{publishErr}</Alert>
+            </>
+          )}
         </form>
       </div>
     </div>
