@@ -2,14 +2,16 @@ import axios from "axios";
 import { Sidebar } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { HiArrowSmRight, HiUser } from "react-icons/hi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { signOutSuccess } from "../redux/state/user/userSlice";
+import { ImBlog } from "react-icons/im";
 
 function DashBoardSidebar() {
   const [tab, setTab] = useState(null);
   const location = useLocation();
   const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -19,7 +21,6 @@ function DashBoardSidebar() {
       setTab(tabFromURL);
     }
   }, [location.search]);
-  console.log(tab);
 
   //signOut
   const handleSignOut = () => {
@@ -44,13 +45,20 @@ function DashBoardSidebar() {
             <Sidebar.Item
               active={tab === "profile"}
               icon={HiUser}
-              label="user"
+              label={currentUser.isAdmin === true ? "admin" : "user"}
               labelColor="dark"
               as="div"
             >
               Profile
             </Sidebar.Item>
           </Link>
+          {currentUser.isAdmin && (
+            <Link to="/dashboard?tab=posts">
+              <Sidebar.Item active={tab === "posts"} icon={ImBlog} as="div">
+                posts
+              </Sidebar.Item>
+            </Link>
+          )}
           <Sidebar.Item
             onClick={handleSignOut}
             icon={HiArrowSmRight}
