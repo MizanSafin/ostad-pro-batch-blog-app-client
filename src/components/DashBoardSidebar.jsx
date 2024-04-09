@@ -40,7 +40,7 @@ function DashBoardSidebar() {
   return (
     <Sidebar className="w-full md:w-64">
       <Sidebar.Items>
-        <Sidebar.ItemGroup>
+        <Sidebar.ItemGroup className="flex flex-col gap-1">
           <Link to={"/dashboard?tab=profile"}>
             <Sidebar.Item
               active={tab === "profile"}
@@ -59,13 +59,15 @@ function DashBoardSidebar() {
               </Sidebar.Item>
             </Link>
           )}
-          <Sidebar.Item
-            onClick={handleSignOut}
-            icon={HiArrowSmRight}
-            className="cursor-pointer"
-          >
-            Sign out
-          </Sidebar.Item>
+          <Link>
+            <Sidebar.Item
+              onClick={handleSignOut}
+              icon={HiArrowSmRight}
+              className="cursor-pointer"
+            >
+              Sign out
+            </Sidebar.Item>
+          </Link>
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
