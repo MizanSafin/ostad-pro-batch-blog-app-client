@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 function DashPosts() {
   const [userPosts, setUserPosts] = useState([]);
+  const [showMore, setShowMore] = useState(true);
 
   const { currentUser } = useSelector((state) => state.user);
   console.log(currentUser);
@@ -20,11 +21,32 @@ function DashPosts() {
         )
         .then((res) => {
           setUserPosts(res.data.posts);
+          if (res.data.posts.length < 9) {
+            // setShowMore(false);
+          }
         })
         .catch((error) => console.log(error));
     })();
-  }, []);
+  }, [currentUser._id]);
   console.log(userPosts);
+  const handleShowMore = () => {
+    let startIndex = userPosts.length;
+
+    axios
+      .get(
+        `http://localhost:3232/api/v1/post/get-post?userId=${currentUser._id}&startIndex=${startIndex}`,
+        { withCredentials: true }
+      )
+      .then((res) => {
+        if (res.data.success === true) {
+          setUserPosts((prevState) => [...prevState, ...res.data.posts]);
+          if (res.data.posts.length < 3) {
+            setShowMore(false);
+          }
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
       <Table hoverable className="shadow-md">
@@ -78,6 +100,16 @@ function DashPosts() {
           )}
         </Table.Body>
       </Table>
+      {showMore && (
+        <>
+          <button
+            onClick={handleShowMore}
+            className="text-sm transition-colors py-3 self-center w-full text-violet-400 hover:text-violet-600"
+          >
+            ShowMore
+          </button>
+        </>
+      )}
     </div>
   );
 }
