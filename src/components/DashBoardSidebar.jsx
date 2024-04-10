@@ -15,7 +15,7 @@ function DashBoardSidebar() {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
-    console.log(urlParams.get("tab"));
+
     let tabFromURL = urlParams.get("tab");
     if (tabFromURL) {
       setTab(tabFromURL);
@@ -64,6 +64,7 @@ function DashBoardSidebar() {
               onClick={handleSignOut}
               icon={HiArrowSmRight}
               className="cursor-pointer"
+              as="div"
             >
               Sign out
             </Sidebar.Item>
