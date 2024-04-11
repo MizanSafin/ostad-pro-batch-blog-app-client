@@ -72,7 +72,7 @@ function DashPosts() {
           );
         }
       })
-      .ctach((err) => console.log(err));
+      .catch((err) => console.log(err));
   };
   console.log(userPosts);
   return (

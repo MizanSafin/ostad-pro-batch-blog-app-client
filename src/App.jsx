@@ -17,6 +17,7 @@ import SignUpPage from "./pages/SignUpPage";
 import PrivateRoute from "./components/PrivateRoute";
 import CreatePost from "./components/CreatePost";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
+import UpdatePost from "./components/UpdatePost";
 // const queryClient = new QueryClient();
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         </Route>
         <Route element={<OnlyAdminPrivateRoute />}>
           <Route path="/create-post" element={<CreatePost />} />
+          <Route path="/update-post/:postId" element={<UpdatePost />} />
         </Route>
 
         <Route path="/sign-in" element={<SignInPage />} />
