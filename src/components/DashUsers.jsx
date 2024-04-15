@@ -67,14 +67,13 @@ function DashUsers() {
   const handleDeleteUser = () => {
     setShowModal(false);
     axios
-      .get(
-        `http://localhost:3232/api/v1/post/delete-post/${currentUser._id}/${postIdToDelete}`,
-        { withCredentials: true }
-      )
+      .get(`http://localhost:3232/api/v1/user/delete/${userIdToDelete}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         if (res.data.success === true) {
-          setUserPosts((prevState) =>
-            prevState.filter((post) => post._id !== postIdToDelete)
+          setUsers((prevState) =>
+            prevState.filter((user) => user._id !== userIdToDelete)
           );
         }
       })
@@ -123,7 +122,7 @@ function DashUsers() {
                       <span
                         onClick={() => {
                           setShowModal(true);
-                          setUserIdToDelete(post._id);
+                          setUserIdToDelete(user._id);
                         }}
                       >
                         delete
