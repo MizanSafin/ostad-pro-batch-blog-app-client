@@ -5,7 +5,8 @@ import { HiArrowSmRight, HiUser } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { signOutSuccess } from "../redux/state/user/userSlice";
-import { ImBlog } from "react-icons/im";
+import { FaBlogger } from "react-icons/fa";
+import { HiUsers } from "react-icons/hi";
 
 function DashBoardSidebar() {
   const [tab, setTab] = useState(null);
@@ -54,8 +55,15 @@ function DashBoardSidebar() {
           </Link>
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=posts">
-              <Sidebar.Item active={tab === "posts"} icon={ImBlog} as="div">
+              <Sidebar.Item active={tab === "posts"} icon={FaBlogger} as="div">
                 posts
+              </Sidebar.Item>
+            </Link>
+          )}
+          {currentUser.isAdmin && (
+            <Link to="/dashboard?tab=users">
+              <Sidebar.Item active={tab === "Users"} icon={HiUsers} as="div">
+                users
               </Sidebar.Item>
             </Link>
           )}
