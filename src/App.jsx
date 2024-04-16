@@ -19,6 +19,7 @@ import CreatePost from "./components/CreatePost";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
 import UpdatePost from "./components/UpdatePost";
 import PostCard from "./components/PostCard";
+import Tailwind from "./components/Tailwind";
 // const queryClient = new QueryClient();
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/post/:slug" element={<PostCard />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/tailwind" element={<Tailwind />} />
       </Routes>
       <Footer />
     </BrowserRouter>

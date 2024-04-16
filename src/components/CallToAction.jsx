@@ -1,0 +1,26 @@
+import React from "react";
+
+function CallToAction() {
+  return (
+    <div className="w-full flex md:flex-row flex-col my-10 border-lime-500 border-4 rounded-se-[50px] p-3 rounded-bl-[80px]">
+      <div className="right flex-1 flex flex-col gap-2 items-center md:mb-0 mb-7 justify-center">
+        <h2 className="dark:text-slate-500">Do you want to learn MERN ?</h2>
+        <h4 className="dark:text-slate-500">
+          100+ Javascript Project with resources
+        </h4>
+        <button className="bg-lime-500 px-5 rounded-md py-2 transition-all hover:bg-lime-200 hover:text-slate-600 text-slate-50 mt-2">
+          100+ Javascript projects
+        </button>
+      </div>
+      <div className="left flex-1 rounded-md p-5">
+        <img
+          src="https://images.pexels.com/photos/5926382/pexels-photo-5926382.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+          alt=""
+          className="w-full rounded-md "
+        />
+      </div>
+    </div>
+  );
+}
+
+export default CallToAction;
