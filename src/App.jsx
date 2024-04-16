@@ -18,6 +18,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import CreatePost from "./components/CreatePost";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
 import UpdatePost from "./components/UpdatePost";
+import PostCard from "./components/PostCard";
 // const queryClient = new QueryClient();
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
 
         <Route path="/projects" element={<ProjectsPages />} />
         <Route path="/blogs" element={<BlogsPage />} />
+        <Route path="/post/:slug" element={<PostCard />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
       <Footer />
