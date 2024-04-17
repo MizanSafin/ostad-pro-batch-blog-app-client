@@ -36,9 +36,9 @@ function Header() {
         <div className="left flex items-center">
           <Link
             to={"/"}
-            className="whitespace-nowrap self-center py-2 text-lime-300 font-medium italic font-[mv boli]"
+            className="whitespace-nowrap self-center py-2 dark:text-lime-300 text-lime-500 font-medium italic font-[mv boli]"
           >
-            <span className="text-[18px] px-2 py-1 text-lime-200 to-lime-500 via-lime-300 from-lime-100 rounded-md  ">
+            <span className="text-[18px] px-2 py-1 dark:text-lime-200 text-lime-400 to-lime-500 via-lime-300 from-lime-100 rounded-md  ">
               Mizan,s
             </span>
             Blog

@@ -18,7 +18,7 @@ function CallToAction() {
         <img
           src="https://images.pexels.com/photos/5926382/pexels-photo-5926382.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
           alt=""
-          className="w-full rounded-md rounded-es-[38px] md:rounded-es-md md:rounded-se-3xl"
+          className="w-full object-cover max-h-[200px] rounded-md rounded-es-[38px] md:rounded-es-md md:rounded-se-3xl"
         />
       </div>
     </div>

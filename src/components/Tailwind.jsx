@@ -1,6 +1,22 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 function Tailwind() {
+  let [count, setCount] = useState(0);
+  const commentRef = useRef();
+  const countRef = useRef();
+
+  useEffect(() => {
+    countRef.current.innerText = commentRef.current.maxLength;
+    setCount(commentRef.current.maxLength);
+  }, []);
+
+  const handleChange = (e) => {
+    let inputLength = e.target.value.length;
+    if (inputLength > commentRef.current.maxLength) {
+      return;
+    }
+    setCount(commentRef.current.maxLength - inputLength);
+  };
   return (
     <div className="bg-slate-50 dark:bg-slate-800">
       <div className="mx-auto max-w-[600px] py-10">
@@ -56,6 +72,25 @@ function Tailwind() {
               minus optio veritatis dolore, eligendi dicta nam dolorem?
             </p>
           </div>
+        </div>
+      </div>
+      <div className="area mx-auto max-w-[600px] py-10 px-10">
+        <label htmlFor="comment">Comment</label>
+        <textarea
+          ref={commentRef}
+          className="w-full dark:text-slate-600"
+          placeholder="Add a comment"
+          name="comment"
+          id="comment"
+          onChange={handleChange}
+          rows="5"
+          maxLength="120"
+        ></textarea>
+        <div className="letter flex text-xs justify-between">
+          <span>Remaining Letter : {count}</span>
+          <span className="text-xs flex flex-nowrap justify-center items-center">
+            Max Length : <h2 ref={countRef}></h2>{" "}
+          </span>
         </div>
       </div>
     </div>

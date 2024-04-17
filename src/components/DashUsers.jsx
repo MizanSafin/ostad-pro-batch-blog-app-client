@@ -86,7 +86,9 @@ function DashUsers() {
         <Table.Head>
           <Table.HeadCell>post created</Table.HeadCell>
           <Table.HeadCell>User name</Table.HeadCell>
-          <Table.HeadCell>User image</Table.HeadCell>
+          <Table.HeadCell className="max-w-[100px] text-nowrap">
+            User image
+          </Table.HeadCell>
           <Table.HeadCell>Email</Table.HeadCell>
           <Table.HeadCell>isAdmin</Table.HeadCell>
           <Table.HeadCell>delete</Table.HeadCell>
@@ -106,7 +108,7 @@ function DashUsers() {
                     <Table.Cell className="min-w-[160px] md:max-w-[240px]">
                       {user.userName}
                     </Table.Cell>
-                    <Table.Cell className="w-[70px] h-[70px] md:w-[105px] md:h-[90px]">
+                    <Table.Cell className="h-[80px]  md:w-[105px] md:h-[90px]">
                       <img
                         src={user.profilePicture}
                         alt="user-img"

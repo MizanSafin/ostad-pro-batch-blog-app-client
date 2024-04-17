@@ -41,8 +41,15 @@ function PostCard() {
 
   return (
     <>
+      {loading && (
+        <>
+          <div className="min-h-screen   flex justify-center items-center">
+            <Spinner size="xl" />
+          </div>
+        </>
+      )}
       <div className="dark:bg-[unset] min-h-screen max-w-4xl mx-auto flex flex-col gap-4">
-        <h2 className="font-semibold text-2xl  md:text-4xl max-w-2xl text-center w-full mx-auto my-7 px-5">
+        <h2 className="font-semibold text-2xl  md:text-3xl max-w-2xl text-center w-full mx-auto my-7 px-5">
           {post && post.title}
         </h2>
         <Link to={`/search?category=${post && post.category}`} className="-m-5">
@@ -71,17 +78,10 @@ function PostCard() {
           <CallToAction />
         </div>
         <hr className="" />
-        <div className="max-w-2xl w-full mx-auto md:p-0 p-5">
+        <div className="max-w-4xl w-full mx-auto md:p-0 p-5">
           <CommentSection postId={post && post._id} />
         </div>
       </div>
-      {loading && (
-        <>
-          <div className="min-h-screen flex justify-center items-center">
-            <Spinner size="xl" />
-          </div>
-        </>
-      )}
     </>
   );
 }
