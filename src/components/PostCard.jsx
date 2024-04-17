@@ -3,6 +3,7 @@ import { Spinner } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import CallToAction from "./CallToAction";
+import CommentSection from "./CommentSection";
 
 function PostCard() {
   const [loading, setLoading] = useState(false);
@@ -37,11 +38,11 @@ function PostCard() {
     };
     fetchPost();
   }, [slug]);
-  console.log(post);
+
   return (
     <>
       <div className="dark:bg-[unset] min-h-screen max-w-4xl mx-auto flex flex-col gap-4">
-        <h2 className="font-semibold text-2xl  md:text-4xl max-w-2xl text-center w-full mx-auto my-5 px-5">
+        <h2 className="font-semibold text-2xl  md:text-4xl max-w-2xl text-center w-full mx-auto my-7 px-5">
           {post && post.title}
         </h2>
         <Link to={`/search?category=${post && post.category}`} className="-m-5">
@@ -65,8 +66,13 @@ function PostCard() {
           className="post-content max-w-2xl mx-auto mb-5 px-5 text-justify"
           dangerouslySetInnerHTML={{ __html: post && post.content }}
         ></div>
+        <hr />
         <div className="max-w-4xl w-full mx-auto md:p-0 p-5 ">
           <CallToAction />
+        </div>
+        <hr className="" />
+        <div className="max-w-2xl w-full mx-auto md:p-0 p-5">
+          <CommentSection postId={post && post._id} />
         </div>
       </div>
       {loading && (

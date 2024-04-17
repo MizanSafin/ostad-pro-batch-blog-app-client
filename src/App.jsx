@@ -20,11 +20,13 @@ import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
 import UpdatePost from "./components/UpdatePost";
 import PostCard from "./components/PostCard";
 import Tailwind from "./components/Tailwind";
+import ScrollToTop from "./components/ScrollToTop";
 // const queryClient = new QueryClient();
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Header />
       {/* <QueryClientProvider client={queryClient}>
         <PaginationPage />

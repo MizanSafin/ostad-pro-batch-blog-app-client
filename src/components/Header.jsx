@@ -36,9 +36,9 @@ function Header() {
         <div className="left flex items-center">
           <Link
             to={"/"}
-            className="whitespace-nowrap self-center py-2 text-lime-900"
+            className="whitespace-nowrap self-center py-2 text-lime-300 font-medium italic font-[mv boli]"
           >
-            <span className="px-2 py-1 bg-gradient-to-r to-lime-500 via-lime-300 from-lime-100 rounded-md ">
+            <span className="text-[18px] px-2 py-1 text-lime-200 to-lime-500 via-lime-300 from-lime-100 rounded-md  ">
               Mizan,s
             </span>
             Blog
@@ -109,9 +109,9 @@ function Header() {
           <Navbar.Link active={path === "/projects"} as={"div"}>
             <Link to={"/projects"}>Projects</Link>
           </Navbar.Link>
-          <Navbar.Link active={path === "/blogs"} as={"div"}>
+          {/* <Navbar.Link active={path === "/blogs"} as={"div"}>
             <Link to={"/blogs"}>Blogs</Link>
-          </Navbar.Link>
+          </Navbar.Link> */}
           <Navbar.Link active={path === "/contact"} as={"div"}>
             <Link to={"/contact"}>contact me</Link>
           </Navbar.Link>
