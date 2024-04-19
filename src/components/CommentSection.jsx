@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { Alert } from "flowbite-react";
+import Comment from "./Comment";
 
 function CommentSection({ postId }) {
   const [comment, setComment] = useState("");
@@ -25,7 +27,7 @@ function CommentSection({ postId }) {
           if (res.data.success === true) {
             setCommentErr(null);
             setComment("");
-            setComments([...comments, res.data.comment]);
+            setComments([res.data.comment, ...comments]);
           }
         })
         .catch((err) => {
@@ -35,7 +37,28 @@ function CommentSection({ postId }) {
       setCommentErr(error.message);
     }
   };
-  console.log(comments);
+
+  useEffect(() => {
+    const getComments = async () => {
+      try {
+        axios
+          .get(`http://localhost:3232/api/v1/comment/get-comments/${postId}`, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            if (res.data.success === true) {
+              setComments(res.data.comments);
+            }
+          })
+          .catch((err) => console.log(err));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getComments();
+  }, [postId]);
+
+  // console.log(comments);
   return (
     <div className=" mb-5">
       {currentUser ? (
@@ -95,6 +118,43 @@ function CommentSection({ postId }) {
               </button>
             </div>
           </form>
+
+          {/* Comment error show */}
+          {commentErr && (
+            <>
+              <Alert color="failure" className="mt-5">
+                {commentErr}
+              </Alert>
+            </>
+          )}
+
+          <div className=" my-8 max-w-2xl mx-auto w-full">
+            {comments && comments.length > 0 ? (
+              <>
+                <div className="heading flex gap-3 items-center mb-5">
+                  <h2 className="text-sm font-semibold">Comments</h2>
+                  <span className="text-xs  border border-lime-700 px-3 py-1">
+                    {comments.length}
+                  </span>
+                </div>
+                <hr />
+              </>
+            ) : (
+              <h2>No comments </h2>
+            )}
+
+            {comments && comments.length > 0 ? (
+              <>
+                {comments.map((postComment, index) => {
+                  return (
+                    <Comment key={index.toString()} comment={postComment} />
+                  );
+                })}
+              </>
+            ) : (
+              ""
+            )}
+          </div>
         </>
       )}
     </div>
