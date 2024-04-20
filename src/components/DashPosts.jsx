@@ -1,65 +1,67 @@
-import React, { useEffect, useState } from "react";
-import { Button, Modal, Table } from "flowbite-react";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
+import React, { useEffect, useState } from "react"
+import { Button, Modal, Table } from "flowbite-react"
+import axios from "axios"
+import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
+import { HiOutlineExclamationCircle } from "react-icons/hi"
 
 function DashPosts() {
-  const [userPosts, setUserPosts] = useState([]);
-  const [showMore, setShowMore] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const { currentUser } = useSelector((state) => state.user);
-  const [showModal, setShowModal] = useState(false);
-  const [postIdToDelete, setPostIdToDelete] = useState("");
+  const [userPosts, setUserPosts] = useState([])
+  const [showMore, setShowMore] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const { currentUser } = useSelector((state) => state.user)
+  const [showModal, setShowModal] = useState(false)
+  const [postIdToDelete, setPostIdToDelete] = useState("")
 
   useEffect(() => {
-    (() => {
-      setShowMore(true);
+    ;(() => {
+      setShowMore(true)
       axios
         .get(
-          `http://localhost:3232/api/v1/post/get-post?userId=${currentUser._id}`,
+          `http://localhost:3232/api/v1/post/get-post`,
+          // ?userId=${currentUser._id}
           {
             withCredentials: true,
           }
         )
         .then((res) => {
-          setUserPosts(res.data.posts);
+          setUserPosts(res.data.posts)
           if (res.data.posts.length < 3) {
-            setShowMore(false);
+            setShowMore(false)
           }
         })
         .catch((error) => {
-          console.log(error);
-        });
-    })();
-  }, [currentUser._id]);
+          console.log(error)
+        })
+    })()
+  }, [currentUser._id])
 
   const handleShowMore = () => {
-    let startIndex = userPosts.length;
-    setLoading(true);
+    let startIndex = userPosts.length
+    setLoading(true)
     axios
       .get(
-        `http://localhost:3232/api/v1/post/get-post?userId=${currentUser._id}&startIndex=${startIndex}`,
+        `http://localhost:3232/api/v1/post/get-post?startIndex=${startIndex}`,
+        // userId=${currentUser._id}&
         { withCredentials: true }
       )
       .then((res) => {
-        setLoading(false);
+        setLoading(false)
         if (res.data.success === true) {
-          setUserPosts((prevState) => [...prevState, ...res.data.posts]);
+          setUserPosts((prevState) => [...prevState, ...res.data.posts])
           if (res.data.posts.length < 3) {
-            setShowMore(false);
+            setShowMore(false)
           }
         }
       })
       .catch((err) => {
-        setLoading(false);
-        console.log(err);
-      });
-  };
+        setLoading(false)
+        console.log(err)
+      })
+  }
 
   const handleDeletePost = () => {
-    setShowModal(false);
+    setShowModal(false)
     axios
       .get(
         `http://localhost:3232/api/v1/post/delete-post/${currentUser._id}/${postIdToDelete}`,
@@ -69,19 +71,19 @@ function DashPosts() {
         if (res.data.success === true) {
           setUserPosts((prevState) =>
             prevState.filter((post) => post._id !== postIdToDelete)
-          );
+          )
         }
       })
-      .catch((err) => console.log(err));
-  };
-  console.log(userPosts);
+      .catch((err) => console.log(err))
+  }
+  console.log(userPosts)
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
       <Table hoverable className="shadow-md">
         <Table.Head>
           <Table.HeadCell>post updated</Table.HeadCell>
-          <Table.HeadCell>post title</Table.HeadCell>
           <Table.HeadCell>post image</Table.HeadCell>
+          <Table.HeadCell>post title</Table.HeadCell>
           <Table.HeadCell>Category</Table.HeadCell>
           <Table.HeadCell>delete</Table.HeadCell>
           <Table.HeadCell>update</Table.HeadCell>
@@ -115,8 +117,8 @@ function DashPosts() {
                     <Table.Cell className="text-red-800 hover:underline transition-all hover:text-red-500 cursor-pointer">
                       <span
                         onClick={() => {
-                          setShowModal(true);
-                          setPostIdToDelete(post._id);
+                          setShowModal(true)
+                          setPostIdToDelete(post._id)
                         }}
                       >
                         delete
@@ -126,7 +128,7 @@ function DashPosts() {
                       <Link to={`/update-post/${post._id}`}>edit</Link>
                     </Table.Cell>
                   </Table.Row>
-                );
+                )
               })}
             </>
           ) : (
@@ -173,7 +175,7 @@ function DashPosts() {
         </Modal.Body>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default DashPosts;
+export default DashPosts

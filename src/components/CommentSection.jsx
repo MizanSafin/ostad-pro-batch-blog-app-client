@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { Alert } from "flowbite-react";
-import Comment from "./Comment";
+import React, { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
+import axios from "axios"
+import { Alert } from "flowbite-react"
+import Comment from "./Comment"
 
 function CommentSection({ postId }) {
-  const [comment, setComment] = useState("");
-  const [commentErr, setCommentErr] = useState(null);
-  const { currentUser } = useSelector((state) => state.user);
-  const [comments, setComments] = useState([]);
+  const [commentText, setCommentText] = useState("")
+  const [commentErr, setCommentErr] = useState(null)
+  const { currentUser } = useSelector((state) => state.user)
+  const [comments, setComments] = useState([])
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      if (comment.trim() === "") {
-        return;
+      if (commentText.trim() === "") {
+        return
       }
-      let reqBody = { content: comment, postId, userId: currentUser._id };
+      let reqBody = { content: commentText, postId, userId: currentUser._id }
 
       axios
         .post(`http://localhost:3232/api/v1/comment/create-comment`, reqBody, {
@@ -25,18 +26,18 @@ function CommentSection({ postId }) {
         })
         .then((res) => {
           if (res.data.success === true) {
-            setCommentErr(null);
-            setComment("");
-            setComments([res.data.comment, ...comments]);
+            setCommentErr(null)
+            setCommentText("")
+            setComments([res.data.comment, ...comments])
           }
         })
         .catch((err) => {
-          setCommentErr(err.message);
-        });
+          setCommentErr(err.message)
+        })
     } catch (error) {
-      setCommentErr(error.message);
+      setCommentErr(error.message)
     }
-  };
+  }
 
   useEffect(() => {
     const getComments = async () => {
@@ -47,18 +48,48 @@ function CommentSection({ postId }) {
           })
           .then((res) => {
             if (res.data.success === true) {
-              setComments(res.data.comments);
+              setComments(res.data.comments)
             }
           })
-          .catch((err) => console.log(err));
+          .catch((err) => console.log(err))
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
-    };
-    getComments();
-  }, [postId]);
+    }
+    getComments()
+  }, [postId])
 
-  // console.log(comments);
+  const handleLike = async (commentId) => {
+    if (!currentUser) {
+      navigate("/sign-in")
+      return
+    }
+    try {
+      axios
+        .get(`http://localhost:3232/api/v1/comment/like-comment/${commentId}`, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          if (res.data.success === true) {
+            setComments(
+              comments.map((comment) =>
+                comment._id === commentId
+                  ? {
+                      ...comment,
+                      likes: res.data.comment.likes,
+                      numbersOfLikes: res.data.comment.likes.length,
+                    }
+                  : comment
+              )
+            )
+          }
+        })
+        .catch((err) => console.log(err))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className=" mb-5">
       {currentUser ? (
@@ -102,13 +133,13 @@ function CommentSection({ postId }) {
               id="comment"
               rows="5"
               className="w-full"
-              onChange={(e) => setComment(e.target.value)}
-              value={comment}
+              onChange={(e) => setCommentText(e.target.value)}
+              value={commentText}
               maxLength="120"
             ></textarea>
             <div className="flex justify-between items-center">
               <h2 className="text-xs">
-                Remaining letters : {120 - comment.length}
+                Remaining letters : {120 - commentText.length}
               </h2>
               <button
                 type="submit"
@@ -147,8 +178,12 @@ function CommentSection({ postId }) {
               <>
                 {comments.map((postComment, index) => {
                   return (
-                    <Comment key={index.toString()} comment={postComment} />
-                  );
+                    <Comment
+                      key={index.toString()}
+                      handleLike={handleLike}
+                      comment={postComment}
+                    />
+                  )
                 })}
               </>
             ) : (
@@ -158,7 +193,7 @@ function CommentSection({ postId }) {
         </>
       )}
     </div>
-  );
+  )
 }
 
-export default CommentSection;
+export default CommentSection

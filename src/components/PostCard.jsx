@@ -58,7 +58,7 @@ function PostCard() {
           </button>
         </Link>
         <img
-          className="border-2 border-lime-50 rounded-md max-w-4xl max-h-[240px] md:max-h-[400px] md: object-cover p-3 mt-4 mb-5"
+          className="border-2 border-lime-50 rounded-md max-w-4xl max-h-[200px] md:max-h-[300px] md: object-cover p-3 mt-4 mb-5"
           src={post && post.image}
           alt=""
         />
