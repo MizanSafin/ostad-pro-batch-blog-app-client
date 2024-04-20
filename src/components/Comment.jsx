@@ -5,7 +5,7 @@ import { IoThumbsUpSharp } from "react-icons/io5"
 import { useSelector } from "react-redux"
 import { Textarea } from "flowbite-react"
 
-function Comment({ comment, handleLike, onEdit }) {
+function Comment({ comment, handleLike, onEdit, onDelete }) {
   const [users, setUsers] = useState({})
   const [editStart, setEditStart] = useState(false)
   const { currentUser } = useSelector((state) => state.user)
@@ -124,6 +124,12 @@ function Comment({ comment, handleLike, onEdit }) {
                     className="text-xs font-medium text-gray-400 hover:text-lime-400"
                   >
                     Edit
+                  </button>
+                  <button
+                    onClick={() => onDelete(comment._id)}
+                    className="text-xs font-medium text-gray-400 hover:text-red-400"
+                  >
+                    Delete
                   </button>
                 </>
               ) : (

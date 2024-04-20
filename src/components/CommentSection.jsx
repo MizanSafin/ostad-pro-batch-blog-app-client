@@ -2,14 +2,17 @@ import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
-import { Alert } from "flowbite-react"
+import { Alert, Button, Modal } from "flowbite-react"
 import Comment from "./Comment"
+import { HiOutlineExclamationCircle } from "react-icons/hi"
 
 function CommentSection({ postId }) {
   const [commentText, setCommentText] = useState("")
   const [commentErr, setCommentErr] = useState(null)
   const { currentUser } = useSelector((state) => state.user)
   const [comments, setComments] = useState([])
+  const [showModal, setShowModal] = useState(false)
+  const [commentIdToDelete, setCommentIdToDelete] = useState(null)
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -97,7 +100,30 @@ function CommentSection({ postId }) {
       )
     )
   }
-
+  const handleDeleteComment = async () => {
+    setShowModal(false)
+    try {
+      if (!currentUser) {
+        navigate("/sign-in")
+        return
+      }
+      axios
+        .delete(
+          `http://localhost:3232/api/v1/comment/delete-comment/${commentIdToDelete}`,
+          { withCredentials: true }
+        )
+        .then((res) => {
+          if (res.data.success === true) {
+            setComments(
+              comments.filter((comment) => comment._id !== commentIdToDelete)
+            )
+          }
+        })
+        .catch((err) => console.log(err))
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div className=" mb-5">
       {currentUser ? (
@@ -191,6 +217,10 @@ function CommentSection({ postId }) {
                       handleLike={handleLike}
                       comment={postComment}
                       onEdit={handleEdit}
+                      onDelete={(commentId) => {
+                        setShowModal(true)
+                        setCommentIdToDelete(commentId)
+                      }}
                     />
                   )
                 })}
@@ -198,6 +228,31 @@ function CommentSection({ postId }) {
             ) : (
               ""
             )}
+
+            <Modal
+              show={showModal}
+              onClose={() => setShowModal(false)}
+              popup
+              size="md"
+            >
+              <Modal.Header />
+              <Modal.Body>
+                <div className="text-center">
+                  <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+                  <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
+                    Are you sure you want to delete your account?
+                  </h3>
+                  <div className="flex justify-center gap-4">
+                    <Button color="failure" onClick={handleDeleteComment}>
+                      Yes, I'm sure
+                    </Button>
+                    <Button color="gray" onClick={() => setShowModal(false)}>
+                      No, cancel
+                    </Button>
+                  </div>
+                </div>
+              </Modal.Body>
+            </Modal>
           </div>
         </>
       )}
