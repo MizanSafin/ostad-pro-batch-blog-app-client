@@ -1,20 +1,19 @@
-import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react"
+import React from "react"
+import { Link, useLocation } from "react-router-dom"
 // import DarkMode from "./DarkMode";
-import { AiOutlineSearch } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import { FaMoon, FaSun } from "react-icons/fa";
-import { toggleTheme } from "../redux/state/theme/themeSlice";
-import { signOutSuccess } from "../redux/state/user/userSlice";
-import axios from "axios";
+import { AiOutlineSearch } from "react-icons/ai"
+import { useDispatch, useSelector } from "react-redux"
+import { FaMoon, FaSun } from "react-icons/fa"
+import { toggleTheme } from "../redux/state/theme/themeSlice"
+import { signOutSuccess } from "../redux/state/user/userSlice"
+import axios from "axios"
 
 function Header() {
-  let dispatch = useDispatch();
-  let { theme } = useSelector((state) => state.theme);
-  let path = useLocation().pathname;
-  let { currentUser } = useSelector((state) => state.user);
-  console.log(theme);
+  let dispatch = useDispatch()
+  let { theme } = useSelector((state) => state.theme)
+  let path = useLocation().pathname
+  let { currentUser } = useSelector((state) => state.user)
 
   //signOut
   const handleSignOut = () => {
@@ -24,12 +23,12 @@ function Header() {
       })
       .then((res) => {
         if (res.data.success === false) {
-          console.log(res.data.message);
+          console.log(res.data.message)
         }
-        dispatch(signOutSuccess());
+        dispatch(signOutSuccess())
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
   return (
     <>
       <Navbar className="shadow-md   dark:text-gray-300 ">
@@ -118,7 +117,7 @@ function Header() {
         </Navbar.Collapse>
       </Navbar>
     </>
-  );
+  )
 }
 
-export default Header;
+export default Header

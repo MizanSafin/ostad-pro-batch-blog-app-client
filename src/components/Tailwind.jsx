@@ -1,22 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react"
 
 function Tailwind() {
-  let [count, setCount] = useState(0);
-  const commentRef = useRef();
-  const countRef = useRef();
+  let [count, setCount] = useState(0)
+  const commentRef = useRef()
+  const countRef = useRef()
 
   useEffect(() => {
-    countRef.current.innerText = commentRef.current.maxLength;
-    setCount(commentRef.current.maxLength);
-  }, []);
+    countRef.current.innerText = commentRef.current.maxLength
+    setCount(commentRef.current.maxLength)
+  }, [])
 
   const handleChange = (e) => {
-    let inputLength = e.target.value.length;
+    let inputLength = e.target.value.length
     if (inputLength > commentRef.current.maxLength) {
-      return;
+      return
     }
-    setCount(commentRef.current.maxLength - inputLength);
-  };
+    setCount(commentRef.current.maxLength - inputLength)
+  }
   return (
     <div className="bg-slate-50 dark:bg-slate-800">
       <div className="mx-auto max-w-[600px] py-10">
@@ -92,9 +92,160 @@ function Tailwind() {
             Max Length : <h2 ref={countRef}></h2>{" "}
           </span>
         </div>
+
+        <div className="heroArea flex my-20 gap-5 items-center flex-col md:flex-row">
+          <svg
+            className=" md:h-[120px] md-w-[30px] w-0 h-0 md:block hidden "
+            // width="30"
+            // height="160"
+            viewBox="0 0 20 207"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g id="Arrow 1" filter="url(#filter0_dd_2_12)">
+              <path
+                d="M9.97885 198.795L15.7524 193.022L9.97885 187.248L4.20534 193.022L9.97885 198.795ZM9.97885 0.205578L4.20534 5.97908L9.97885 11.7526L15.7524 5.97908L9.97885 0.205578ZM10.9788 193.022V191.151H8.97885V193.022H10.9788ZM10.9788 183.67L10.9788 172.447H8.97885L8.97885 183.67H10.9788ZM10.9788 157.484V153.743H8.97885V157.484H10.9788ZM10.9788 146.261L10.9788 135.039H8.97885L8.97885 146.261H10.9788ZM10.9788 120.075V116.334H8.97885V120.075H10.9788ZM10.9788 108.853L10.9788 97.63H8.97885L8.97885 108.853H10.9788ZM10.9788 82.6666V78.9258H8.97885V82.6666H10.9788ZM10.9788 71.444L10.9788 60.2215H8.97885L8.97885 71.444H10.9788ZM10.9788 45.2581V41.5172H8.97885V45.2581H10.9788ZM10.9788 34.0355L10.9788 22.8129H8.97885L8.97885 34.0355H10.9788ZM10.9788 7.84951V5.97908H8.97885V7.84951H10.9788ZM9.97885 198.795L15.7524 193.022L9.97885 187.248L4.20534 193.022L9.97885 198.795ZM9.97885 0.205578L4.20534 5.97908L9.97885 11.7526L15.7524 5.97908L9.97885 0.205578ZM10.9788 193.022V191.151H8.97885V193.022H10.9788ZM10.9788 183.67L10.9788 172.447H8.97885L8.97885 183.67H10.9788ZM10.9788 157.484V153.743H8.97885V157.484H10.9788ZM10.9788 146.261L10.9788 135.039H8.97885L8.97885 146.261H10.9788ZM10.9788 120.075V116.334H8.97885V120.075H10.9788ZM10.9788 108.853L10.9788 97.63H8.97885L8.97885 108.853H10.9788ZM10.9788 82.6666V78.9258H8.97885V82.6666H10.9788ZM10.9788 71.444L10.9788 60.2215H8.97885L8.97885 71.444H10.9788ZM10.9788 45.2581V41.5172H8.97885V45.2581H10.9788ZM10.9788 34.0355L10.9788 22.8129H8.97885L8.97885 34.0355H10.9788ZM10.9788 7.84951V5.97908H8.97885V7.84951H10.9788Z"
+                fill="#31D937"
+              />
+            </g>
+            <defs>
+              <filter
+                id="filter0_dd_2_12"
+                x="0.205345"
+                y="0.205566"
+                width="19.547"
+                height="206.59"
+                filterUnits="userSpaceOnUse"
+                color-interpolation-filters="sRGB"
+              >
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feColorMatrix
+                  in="SourceAlpha"
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                  result="hardAlpha"
+                />
+                <feOffset dy="4" />
+                <feGaussianBlur stdDeviation="2" />
+                <feComposite in2="hardAlpha" operator="out" />
+                <feColorMatrix
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                />
+                <feBlend
+                  mode="normal"
+                  in2="BackgroundImageFix"
+                  result="effect1_dropShadow_2_12"
+                />
+                <feColorMatrix
+                  in="SourceAlpha"
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                  result="hardAlpha"
+                />
+                <feOffset dy="4" />
+                <feGaussianBlur stdDeviation="2" />
+                <feComposite in2="hardAlpha" operator="out" />
+                <feColorMatrix
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                />
+                <feBlend
+                  mode="normal"
+                  in2="effect1_dropShadow_2_12"
+                  result="effect2_dropShadow_2_12"
+                />
+                <feBlend
+                  mode="normal"
+                  in="SourceGraphic"
+                  in2="effect2_dropShadow_2_12"
+                  result="shape"
+                />
+              </filter>
+            </defs>
+          </svg>
+          <svg
+            width="208"
+            height="21"
+            viewBox="0 0 208 21"
+            fill="none"
+            className=" "
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g id="Arrow 1" filter="url(#filter0_dd_2_12)">
+              <path
+                d="M4.68402 6.50043L10.4575 12.2739L16.231 6.50043L10.4575 0.726925L4.68402 6.50043ZM203.274 6.50043L197.5 0.726925L191.727 6.50043L197.5 12.2739L203.274 6.50043ZM10.4575 7.50043H12.3279V5.50043H10.4575V7.50043ZM19.8097 7.50043H31.0322V5.50043H19.8097V7.50043ZM45.9956 7.50043H49.7365V5.50043H45.9956V7.50043ZM57.2182 7.50043H68.4408V5.50043H57.2182V7.50043ZM83.4042 7.50043H87.1451V5.50043H83.4042V7.50043ZM94.6268 7.50043H105.849V5.50043H94.6268V7.50043ZM120.813 7.50043H124.554V5.50043H120.813V7.50043ZM132.035 7.50043H143.258V5.50043H132.035V7.50043ZM158.221 7.50043H161.962V5.50043H158.221V7.50043ZM169.444 7.50043H180.666V5.50043H169.444V7.50043ZM195.63 7.50043H197.5V5.50043H195.63V7.50043ZM4.68402 6.50043L10.4575 12.2739L16.231 6.50043L10.4575 0.726925L4.68402 6.50043ZM203.274 6.50043L197.5 0.726925L191.727 6.50043L197.5 12.2739L203.274 6.50043ZM10.4575 7.50043H12.3279V5.50043H10.4575V7.50043ZM19.8097 7.50043H31.0322V5.50043H19.8097V7.50043ZM45.9956 7.50043H49.7365V5.50043H45.9956V7.50043ZM57.2182 7.50043H68.4408V5.50043H57.2182V7.50043ZM83.4042 7.50043H87.1451V5.50043H83.4042V7.50043ZM94.6268 7.50043H105.849V5.50043H94.6268V7.50043ZM120.813 7.50043H124.554V5.50043H120.813V7.50043ZM132.035 7.50043H143.258V5.50043H132.035V7.50043ZM158.221 7.50043H161.962V5.50043H158.221V7.50043ZM169.444 7.50043H180.666V5.50043H169.444V7.50043ZM195.63 7.50043H197.5V5.50043H195.63V7.50043Z"
+                fill="#31D937"
+              />
+            </g>
+            <defs>
+              <filter
+                id="filter0_dd_2_12"
+                x="0.684021"
+                y="0.726929"
+                width="206.59"
+                height="19.547"
+                filterUnits="userSpaceOnUse"
+                color-interpolation-filters="sRGB"
+              >
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feColorMatrix
+                  in="SourceAlpha"
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                  result="hardAlpha"
+                />
+                <feOffset dy="4" />
+                <feGaussianBlur stdDeviation="2" />
+                <feComposite in2="hardAlpha" operator="out" />
+                <feColorMatrix
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                />
+                <feBlend
+                  mode="normal"
+                  in2="BackgroundImageFix"
+                  result="effect1_dropShadow_2_12"
+                />
+                <feColorMatrix
+                  in="SourceAlpha"
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                  result="hardAlpha"
+                />
+                <feOffset dy="4" />
+                <feGaussianBlur stdDeviation="2" />
+                <feComposite in2="hardAlpha" operator="out" />
+                <feColorMatrix
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                />
+                <feBlend
+                  mode="normal"
+                  in2="effect1_dropShadow_2_12"
+                  result="effect2_dropShadow_2_12"
+                />
+                <feBlend
+                  mode="normal"
+                  in="SourceGraphic"
+                  in2="effect2_dropShadow_2_12"
+                  result="shape"
+                />
+              </filter>
+            </defs>
+          </svg>
+
+          <p className="  text-justify">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae
+            asperiores explicabo voluptate libero aliquid perferendis! Unde
+            eligendi iusto ex autem accusantium consectetur, modi illo iste
+            officia aut consequatur culpa velit harum repellendus voluptate
+            voluptatem similique. Ipsa, quas! Quisquam, aliquam in.
+          </p>
+        </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Tailwind;
+export default Tailwind

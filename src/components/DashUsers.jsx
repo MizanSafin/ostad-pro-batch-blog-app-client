@@ -1,71 +1,71 @@
-import React, { useEffect, useState } from "react";
-import { Button, Modal, Table } from "flowbite-react";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
+import React, { useEffect, useState } from "react"
+import { Button, Modal, Table } from "flowbite-react"
+import axios from "axios"
+import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
+import { HiOutlineExclamationCircle } from "react-icons/hi"
 
 function DashUsers() {
-  const [users, setUsers] = useState([]);
-  const [showMore, setShowMore] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const { currentUser } = useSelector((state) => state.user);
-  const [showModal, setShowModal] = useState(false);
-  const [userIdToDelete, setUserIdToDelete] = useState("");
+  const [users, setUsers] = useState([])
+  const [showMore, setShowMore] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const { currentUser } = useSelector((state) => state.user)
+  const [showModal, setShowModal] = useState(false)
+  const [userIdToDelete, setUserIdToDelete] = useState("")
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        setShowMore(true);
+        setShowMore(true)
         axios
           .get(`http://localhost:3232/api/v1/user/get-users`, {
             withCredentials: true,
           })
           .then((res) => {
-            setUsers(res.data.users);
+            setUsers(res.data.users)
             if (res.data.users.length < 3) {
-              setShowMore(false);
+              setShowMore(false)
             }
           })
           .catch((error) => {
-            console.log(error);
-          });
+            console.log(error)
+          })
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
-    };
+    }
 
     if (currentUser.isAdmin) {
-      fetchUsers();
+      fetchUsers()
     }
-  }, [currentUser._id]);
+  }, [currentUser._id])
 
-  console.log(users);
+  console.log(users)
   const handleShowMore = () => {
-    let startIndex = users.length;
-    setLoading(true);
+    let startIndex = users.length
+    setLoading(true)
     axios
       .get(
         `http://localhost:3232/api/v1/user/get-users?startIndex=${startIndex}`,
         { withCredentials: true }
       )
       .then((res) => {
-        setLoading(false);
+        setLoading(false)
         if (res.data.success === true) {
-          setUsers((prevState) => [...prevState, ...res.data.users]);
+          setUsers((prevState) => [...prevState, ...res.data.users])
           if (res.data.users.length < 3) {
-            setShowMore(false);
+            setShowMore(false)
           }
         }
       })
       .catch((err) => {
-        setLoading(false);
-        console.log(err);
-      });
-  };
+        setLoading(false)
+        console.log(err)
+      })
+  }
 
   const handleDeleteUser = () => {
-    setShowModal(false);
+    setShowModal(false)
     axios
       .get(`http://localhost:3232/api/v1/user/delete/${userIdToDelete}`, {
         withCredentials: true,
@@ -74,12 +74,12 @@ function DashUsers() {
         if (res.data.success === true) {
           setUsers((prevState) =>
             prevState.filter((user) => user._id !== userIdToDelete)
-          );
+          )
         }
       })
-      .catch((err) => console.log(err));
-  };
-  console.log(users);
+      .catch((err) => console.log(err))
+  }
+  console.log(users)
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
       <Table hoverable className="shadow-md">
@@ -119,19 +119,21 @@ function DashUsers() {
                       {user.email}
                     </Table.Cell>
 
-                    <Table.Cell>{user.isAdmin ? "✔" : "❌"}</Table.Cell>
+                    <Table.Cell className="text-xs">
+                      {user.isAdmin ? "✔" : "❌"}
+                    </Table.Cell>
                     <Table.Cell className="text-red-800 hover:underline transition-all hover:text-red-500 cursor-pointer">
                       <span
                         onClick={() => {
-                          setShowModal(true);
-                          setUserIdToDelete(user._id);
+                          setShowModal(true)
+                          setUserIdToDelete(user._id)
                         }}
                       >
                         delete
                       </span>
                     </Table.Cell>
                   </Table.Row>
-                );
+                )
               })}
             </>
           ) : (
@@ -178,7 +180,7 @@ function DashUsers() {
         </Modal.Body>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default DashUsers;
+export default DashUsers
