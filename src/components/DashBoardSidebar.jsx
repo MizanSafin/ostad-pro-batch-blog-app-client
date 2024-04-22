@@ -8,6 +8,7 @@ import { signOutSuccess } from "../redux/state/user/userSlice"
 import { FaBlogger } from "react-icons/fa"
 import { HiUsers } from "react-icons/hi"
 import { TiFolderDelete } from "react-icons/ti"
+import { MdSpaceDashboard } from "react-icons/md"
 
 function DashBoardSidebar() {
   const [tab, setTab] = useState(null)
@@ -43,6 +44,17 @@ function DashBoardSidebar() {
     <Sidebar className="w-full md:w-64">
       <Sidebar.Items>
         <Sidebar.ItemGroup className="flex flex-col gap-1">
+          {currentUser.isAdmin && (
+            <Link to="/dashboard?tab=dash">
+              <Sidebar.Item
+                active={tab === "dash"}
+                icon={MdSpaceDashboard}
+                as="div"
+              >
+                Dashboard
+              </Sidebar.Item>
+            </Link>
+          )}
           <Link to={"/dashboard?tab=profile"}>
             <Sidebar.Item
               active={tab === "profile"}
@@ -71,7 +83,7 @@ function DashBoardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=comments">
               <Sidebar.Item
-                active={tab === "Users"}
+                active={tab === "comments"}
                 icon={TiFolderDelete}
                 as="div"
               >
