@@ -125,7 +125,7 @@ function CommentSection({ postId }) {
     }
   }
   return (
-    <div className=" mb-5">
+    <div className=" mb-2">
       {currentUser ? (
         <div className="max-w-2xl w-full mx-auto flex gap-2 items-center justify-between pb-5 text-gray-500 text-sm">
           <div className="flex items-center gap-1">

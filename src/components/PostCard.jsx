@@ -1,44 +1,66 @@
-import axios from "axios";
-import { Spinner } from "flowbite-react";
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import CallToAction from "./CallToAction";
-import CommentSection from "./CommentSection";
+import axios from "axios"
+import { Spinner } from "flowbite-react"
+import React, { useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
+import CallToAction from "./CallToAction"
+import CommentSection from "./CommentSection"
+import SinglePost from "./SinglePost"
 
 function PostCard() {
-  const [loading, setLoading] = useState(false);
-  const [post, setPost] = useState(null);
-  const [err, setErr] = useState(null);
+  const [loading, setLoading] = useState(false)
+  const [post, setPost] = useState(null)
+  const [err, setErr] = useState(null)
+  const [recentPosts, setRecentPosts] = useState([])
 
-  let { slug } = useParams();
+  let { slug } = useParams()
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        setLoading(true);
+        setLoading(true)
         axios
           .get(`http://localhost:3232/api/v1/post/get-post?slug=${slug}`, {
             withCredentials: true,
           })
           .then((res) => {
             if (res.data.success === false) {
-              setLoading(false);
-              return;
+              setLoading(false)
+              return
             }
-            setPost(res.data.posts[0]);
-            setLoading(false);
+            setPost(res.data.posts[0])
+            setLoading(false)
           })
           .catch((err) => {
-            console.log(err);
-            setLoading(false);
-          });
+            console.log(err)
+            setLoading(false)
+          })
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
-    };
-    fetchPost();
-  }, [slug]);
+    }
+    fetchPost()
+  }, [slug])
 
+  useEffect(() => {
+    try {
+      const fetchRecentPosts = async () => {
+        axios
+          .get(`http://localhost:3232/api/v1/post/get-post`, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            if (res.data.success === true) {
+              setRecentPosts(res.data.posts)
+            }
+          })
+          .catch((err) => console.log(err))
+      }
+      fetchRecentPosts()
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+  console.log(recentPosts)
   return (
     <>
       {loading && (
@@ -70,7 +92,7 @@ function PostCard() {
           </span>
         </div>
         <div
-          className="post-content max-w-2xl mx-auto mb-5 px-5 text-justify"
+          className="dark:text-slate-300 text-slate-600 post-content max-w-2xl mx-auto mb-5 px-5 text-justify"
           dangerouslySetInnerHTML={{ __html: post && post.content }}
         ></div>
         <hr />
@@ -78,12 +100,23 @@ function PostCard() {
           <CallToAction />
         </div>
         <hr className="" />
-        <div className="max-w-4xl w-full mx-auto md:p-0 p-5">
+        <div className="max-w-4xl w-full mx-auto md:p-0 p-5 ">
           <CommentSection postId={post && post._id} />
+        </div>
+        <div className="recentPosts max-w-4xl w-full mx-auto md:p-0 md:-mt-7 -mt-12 ">
+          <h2 className="text-xl text-slate-600 dark:text-slate-300 text-center mb-5 font-bold ">
+            Recents Posts
+          </h2>
+          <div className="p-3 flex flex-wrap gap-5 md:gap-10 justify-center postsWrapper mb-3">
+            {recentPosts &&
+              recentPosts.map((post) => {
+                return <SinglePost key={post._id} post={post} />
+              })}
+          </div>
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default PostCard;
+export default PostCard
