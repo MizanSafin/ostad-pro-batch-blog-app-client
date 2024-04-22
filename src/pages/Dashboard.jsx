@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import DashBoardSidebar from "../components/DashBoardSidebar";
-import DashBoardProfile from "../components/DashBoardProfile";
-import DashPosts from "../components/DashPosts";
-import DashUsers from "../components/DashUsers";
+import React, { useEffect, useState } from "react"
+import { useLocation } from "react-router-dom"
+import DashBoardSidebar from "../components/DashBoardSidebar"
+import DashBoardProfile from "../components/DashBoardProfile"
+import DashPosts from "../components/DashPosts"
+import DashUsers from "../components/DashUsers"
+import DashComments from "../components/DashComments"
 
 function Dashboard() {
-  const [tab, setTab] = useState(null);
-  const location = useLocation();
+  const [tab, setTab] = useState(null)
+  const location = useLocation()
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
+    const urlParams = new URLSearchParams(location.search)
 
-    let tabFromURL = urlParams.get("tab");
+    let tabFromURL = urlParams.get("tab")
     if (tabFromURL) {
-      setTab(tabFromURL);
+      setTab(tabFromURL)
     }
-  }, [location.search]);
+  }, [location.search])
 
   return (
     <div className="min-h-screen flex flex-col sm:flex-row">
@@ -27,9 +28,10 @@ function Dashboard() {
         {tab === "profile" && <DashBoardProfile />}
         {tab === "posts" && <DashPosts />}
         {tab === "users" && <DashUsers />}
+        {tab === "comments" && <DashComments />}
       </div>
     </div>
-  );
+  )
 }
 
-export default Dashboard;
+export default Dashboard

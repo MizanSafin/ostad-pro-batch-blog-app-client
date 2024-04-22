@@ -1,27 +1,28 @@
-import axios from "axios";
-import { Sidebar } from "flowbite-react";
-import React, { useEffect, useState } from "react";
-import { HiArrowSmRight, HiUser } from "react-icons/hi";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-import { signOutSuccess } from "../redux/state/user/userSlice";
-import { FaBlogger } from "react-icons/fa";
-import { HiUsers } from "react-icons/hi";
+import axios from "axios"
+import { Sidebar } from "flowbite-react"
+import React, { useEffect, useState } from "react"
+import { HiArrowSmRight, HiUser } from "react-icons/hi"
+import { useDispatch, useSelector } from "react-redux"
+import { Link, useLocation } from "react-router-dom"
+import { signOutSuccess } from "../redux/state/user/userSlice"
+import { FaBlogger } from "react-icons/fa"
+import { HiUsers } from "react-icons/hi"
+import { TiFolderDelete } from "react-icons/ti"
 
 function DashBoardSidebar() {
-  const [tab, setTab] = useState(null);
-  const location = useLocation();
-  const dispatch = useDispatch();
-  const { currentUser } = useSelector((state) => state.user);
+  const [tab, setTab] = useState(null)
+  const location = useLocation()
+  const dispatch = useDispatch()
+  const { currentUser } = useSelector((state) => state.user)
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
+    const urlParams = new URLSearchParams(location.search)
 
-    let tabFromURL = urlParams.get("tab");
+    let tabFromURL = urlParams.get("tab")
     if (tabFromURL) {
-      setTab(tabFromURL);
+      setTab(tabFromURL)
     }
-  }, [location.search]);
+  }, [location.search])
 
   //signOut
   const handleSignOut = () => {
@@ -31,12 +32,12 @@ function DashBoardSidebar() {
       })
       .then((res) => {
         if (res.data.success === false) {
-          console.log(res.data.message);
+          console.log(res.data.message)
         }
-        dispatch(signOutSuccess());
+        dispatch(signOutSuccess())
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
 
   return (
     <Sidebar className="w-full md:w-64">
@@ -67,6 +68,17 @@ function DashBoardSidebar() {
               </Sidebar.Item>
             </Link>
           )}
+          {currentUser.isAdmin && (
+            <Link to="/dashboard?tab=comments">
+              <Sidebar.Item
+                active={tab === "Users"}
+                icon={TiFolderDelete}
+                as="div"
+              >
+                Comments
+              </Sidebar.Item>
+            </Link>
+          )}
           <Link>
             <Sidebar.Item
               onClick={handleSignOut}
@@ -80,7 +92,7 @@ function DashBoardSidebar() {
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
-  );
+  )
 }
 
-export default DashBoardSidebar;
+export default DashBoardSidebar

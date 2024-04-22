@@ -1,9 +1,9 @@
-import React from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
 
 function SinglePost({ post }) {
   return (
-    <div className="md:w-[260px] w-[320px]  h-auto p-4 flex flex-col gap-5   shadow-md dark:border dark:border-lime-300 rounded-md">
+    <div className="transition-all duration-500 md:w-[260px] w-[320px]  h-auto p-4 flex flex-col gap-5   shadow-md dark:border dark:border-lime-300 rounded-md">
       <Link
         to={`/post/${post.slug}`}
         className="w-full h-[150px] overflow-hidden"
@@ -19,7 +19,9 @@ function SinglePost({ post }) {
           {post.title}
         </h3>
         <h4 className="text-sm text-lime-800">{post.category}</h4>
-        <button className="mt-2 bg-lime-500 py-1 text-lime-200 hover:text-lime-500 hover:bg-lime-200 transition-all duration-300 rounded-md">
+        <button
+          className={` mt-2 bg-lime-500 py-1 text-lime-200 hover:text-lime-500 hover:bg-lime-200 transition-all duration-300 rounded-md`}
+        >
           <Link to={`/post/${post.slug}`}>Read Article</Link>
         </button>
       </div>
