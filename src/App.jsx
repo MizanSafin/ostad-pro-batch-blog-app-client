@@ -23,6 +23,7 @@ import Tailwind from "./components/Tailwind"
 import ScrollToTop from "./components/ScrollToTop"
 import Resume from "./components/ResumeCompo/Resume"
 import ContactMe from "./components/ContactMe"
+
 // const queryClient = new QueryClient();
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/resume" element={<Resume />} />
         <Route path="/contact" element={<ContactMe />} />
+
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
