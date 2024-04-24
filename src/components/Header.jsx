@@ -31,7 +31,7 @@ function Header() {
   }
   return (
     <>
-      <Navbar className="shadow-md   dark:text-gray-300 ">
+      <Navbar className="shadow-md   dark:text-gray-300">
         <div className="left flex items-center">
           <Link
             to={"/"}

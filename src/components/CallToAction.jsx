@@ -1,17 +1,17 @@
-import React from "react";
+import React from "react"
 
 function CallToAction() {
   return (
-    <div className="w-full flex md:flex-row flex-col my-10 border-lime-100 hover:border-lime-300 transition-all border-4 rounded-se-[50px] p-2 rounded-bl-[80px]">
+    <div className="w-full flex md:flex-row flex-col my-10 border-lime-100 hover:border-lime-300 transition-all border-4 rounded-se-[50px] p-1 rounded-bl-[80px]">
       <div className="right flex-1 flex flex-col gap-2 items-center md:mb-0 mb-7 justify-center">
         <h2 className="dark:text-slate-500 pt-3 md:pt-0">
           Do you want to learn MERN ?
         </h2>
         <h4 className="dark:text-slate-500">
-          100+ Javascript Project with resources
+          10+ MERN Projects with resources
         </h4>
         <button className="bg-lime-500 px-5 rounded-md py-2 transition-all hover:bg-lime-200 hover:text-slate-600 text-slate-50 mt-2">
-          100+ Javascript projects
+          10+ MERN projects
         </button>
       </div>
       <div className="left flex-1 rounded-md p-5">
@@ -22,7 +22,7 @@ function CallToAction() {
         />
       </div>
     </div>
-  );
+  )
 }
 
-export default CallToAction;
+export default CallToAction

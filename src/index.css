@@ -4,6 +4,8 @@
 
 body {
   overflow-x: hidden;
+  /* font-family: "Courier New", Courier, monospace; */
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .post-content a {
@@ -12,17 +14,35 @@ body {
 .post-content a:hover {
   text-decoration: underline;
 }
-.post-content h1 {
+.post-content h1,
+.post-content h2 {
   padding-bottom: 10px;
   font-size: 20px;
   font-weight: bold;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
-.post-content p {
+.post-content p,
+.post-content span,
+.post-content a {
   margin-bottom: 10px;
+  color: #918b91 !important;
 }
 
 .svg {
   width: 50px;
+}
+
+.homeDesign {
+  background-image: url(https://img.freepik.com/free-vector/abstract-background-design-with-stars-black_53876-66441.jpg?t=st=1713895680~exp=1713899280~hmac=1cc5d847e3e87359662be0e99a2892a6e16e87b3e6cc25a4e39dc4ad4c5c2bbc&w=740);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.bg {
+  background: rgba(20, 79, 20, 0.3);
+  color: #fff4ff !important;
+  padding: 10px;
 }

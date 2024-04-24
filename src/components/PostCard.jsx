@@ -60,7 +60,7 @@ function PostCard() {
       console.log(error)
     }
   }, [])
-  console.log(recentPosts)
+  // console.log(recentPosts)
   return (
     <>
       {loading && (
@@ -71,11 +71,11 @@ function PostCard() {
         </>
       )}
       <div className="dark:bg-[unset] min-h-screen max-w-4xl mx-auto flex flex-col gap-4">
-        <h2 className="font-semibold text-2xl  md:text-3xl max-w-2xl text-center w-full mx-auto my-7 px-5">
+        <h2 className="dark:text-gray-400 font-bold text-[20px] md:text-3xl max-w-2xl text-center w-full mx-auto my-7 px-5">
           {post && post.title}
         </h2>
         <Link to={`/search?category=${post && post.category}`} className="-m-5">
-          <button className="text-green-40 dark:text-green-350 flex py-1    hover:text-green-600  px-5 rounded-md  mx-auto max-w-2xl">
+          <button className="text-gray-400 dark:text-green-350 flex py-1    hover:text-gray-500  px-5 rounded-md  mx-auto max-w-2xl">
             {post && post.category}
           </button>
         </Link>
@@ -85,14 +85,14 @@ function PostCard() {
           alt=""
         />
 
-        <div className="box max-w-2xl w-full mx-auto flex justify-between items-center mb-5 -mt-5 px-5">
+        <div className="box text-gray-400 max-w-2xl w-full mx-auto flex justify-between items-center mb-5 -mt-5 px-5">
           <span>{post && new Date(post.createdAt).toLocaleDateString()}</span>
           <span>
             {`${post && (post.content.length / 1000).toFixed(0)}`} mins read
           </span>
         </div>
         <div
-          className="dark:text-slate-300 text-slate-600 post-content max-w-2xl mx-auto mb-5 px-5 text-justify"
+          className=" dark:!text-slate-600 post-content max-w-2xl mx-auto mb-5 px-5 text-justify"
           dangerouslySetInnerHTML={{ __html: post && post.content }}
         ></div>
         <hr />
